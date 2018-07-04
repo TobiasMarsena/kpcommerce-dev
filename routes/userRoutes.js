@@ -4,12 +4,13 @@ module.exports = app => {
   //ENSURE AUTH
   function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
-    res.redirect('/login');
+    res.redirect('http://localhost:3000/login');
   }
 
   // CONTROLLER
   const instagramController = require('../controllers/instagramController')()
   const youtubeController = require('../controllers/youtubeController')()
+  const snapController = require('../controllers/snapController')()
 
   //USERS
   app.get('/api/current_user', (req, res) => {
@@ -22,4 +23,6 @@ module.exports = app => {
 
   //=> Get Youtube subscription list
   app.get('/api/subscriptions', ensureAuthenticated, youtubeController.getSubscription);
+
+  app.post('/api/payment', ensureAuthenticated, snapController.getPaymentToken);
 }

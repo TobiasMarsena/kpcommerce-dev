@@ -16,6 +16,11 @@ const GoogleParams = {
 const MongoParams = {
     mongo_uri: 'mongodb://Tobias:Tobiyaias13@ds251240.mlab.com:51240/kpcommerce-dev'
 }
+const MidtransParams = {
+    server_key_dev: 'SB-Mid-server-weGz_K4JOP5NJeCbUWLLvaUB',
+    client_key_dev: 'SB-Mid-client-bL_XMR0BUvaqYG98'
+}
 exports.InstagramParams = InstagramParams
 exports.GoogleParams = GoogleParams
 exports.MongoParams = MongoParams
+exports.MidtransParams = MidtransParams

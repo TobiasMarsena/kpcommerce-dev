@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { Button } from 'mdbreact'
+import { SyncLoader } from 'react-spinners'
+import { connect } from 'react-redux'
 import TablePayment from './TablePayment'
+const snap = window.snap
 
 class Payment extends Component {
   constructor(props) {
@@ -18,13 +22,24 @@ class Payment extends Component {
       },
       {
         id: "002",
-        price: 200000,
+        price: 75000,
         quantity: 2,
         name: "Jeans"
-      }]
+      }],
+      customer_details: {
+        name: ""
+      }
     }
   }
 
+  // componentWillMount() {
+  //   const script = document.createElement("script");
+  //   script.setAttribute("data-client-key", "SB-Mid-client-bL_XMR0BUvaqYG98")
+  //   script.setAttribute("src", "https://app.sandbox.midtrans.com/snap/snap.js")
+  //   const snap = document.head.appendChild(script);
+  //   console.log("script added")
+  //   console.log(snap)
+  // }
   componentDidMount() {
     const items = this.state.item_details;
     var gross_amount = 0;
@@ -34,33 +49,61 @@ class Payment extends Component {
     })
     this.setState({
       transaction_details: {
-          order_id: "101",
-          gross_amount: gross_amount
-        }
-      })
+        order_id: "102",
+        gross_amount: gross_amount
+      }
+    })
   }
 
-  showSNAP(transactionData) {
-    console.log(transactionData)
+  showSNAP() {
+    this.setState({
+      customer_details: {
+        name: this.props.auth.name
+      }
+    }, () => {
+      axios.post("/api/payment", this.state, {})
+        .then((res) => {
+          console.log(res.data)
+          snap.pay(res.data.token)
+        })
+    })
+  }
+  renderCheckoutButton() {
+    switch(this.props.auth) {
+      case null:
+        return <SyncLoader color={"D0021B"}/>
+      case false:
+        return <Button color="danger" disabled>
+                <h5 className="font-weight-bold">
+                  Please Login First
+                </h5>
+              </Button>
+      default:
+        return <Button color="danger" onClick={
+                  this.showSNAP.bind(this)
+                }>
+                <h4 className="font-weight-bold">
+                  CHECKOUT
+                </h4>
+              </Button>
+    }
   }
   render(){
     const transactionData = this.state
     return(
       <div>
+
         <h2>Dummy Payment</h2>
           <TablePayment transactionData={ transactionData }/>
           <section className="text-right">
-            <Button color="danger" onClick={
-                this.showSNAP.bind(null, transactionData)
-              }>
-              <h4 className="font-weight-bold">
-                CHECKOUT
-              </h4>
-            </Button>
+            {this.renderCheckoutButton()}
           </section>
       </div>
     )
   }
 }
 
-export default Payment
+function mapStateToProps({ auth }) {
+  return { auth }
+}
+export default connect(mapStateToProps)(Payment)

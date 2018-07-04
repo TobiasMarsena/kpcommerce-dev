@@ -15,6 +15,7 @@ mongoose.connect(config.MongoParams.mongo_uri)
 app.use(session({ secret: 'somesecret' }));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+process.env.ENVIRONMENT = 'development'
 
 // ROUTES
 require('./routes/authRoutes')(app);
