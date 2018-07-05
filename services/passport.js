@@ -2,6 +2,7 @@ const passport = require('passport')
 const mongoose = require('mongoose')
 const YoutubeV3Strategy = require('passport-youtube-v3').Strategy
 const InstagramStrategy = require('passport-instagram').Strategy
+const LocalStrategy = require('passport-local').Strategy
 
 // MongoDB models
 const User = mongoose.model('users')
@@ -17,6 +18,19 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
+
+// Local Strategy
+passport.use(new LocalStrategy({
+  usernameField: "email",
+  passwordField: "password"
+},
+  (username, password, done) => {
+    User.findOne({ email: username})
+      .then((user) => {
+        if (!user) { return done(null, false) }
+        if (user.comparePassword(password, user.password)) { return done(null, user) }
+      })
+  }))
 
 //Youtube Strategy
 passport.use(new YoutubeV3Strategy({

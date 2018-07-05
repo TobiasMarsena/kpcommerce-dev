@@ -20,33 +20,24 @@ module.exports = (app) => {
   });
 
   app.post('/auth/register', (req, res) => {
-    User.findOne({ name: req.body.email })
-      .then((user) => {
-        if (!user) {
-          new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-          }).save()
-        }
-      })
-    res.redirect('/')
-  })
-  app.post('/auth/login', (req, res) => {
     User.findOne({ email: req.body.email })
       .then((user) => {
-        if (user) {
-          if (user.password == req.body.password) {
-            console.log("Berhasil Login")
-          } else {
-            console.log("Gagal Login")
-          }
+        if (!user) {
+          user = new User()
+          user.name= req.body.name
+          user.email= req.body.email
+          user.password= user.hashPassword(req.body.password)
+          user.save()
         } else {
-          console.log("User tidak ada")
+          console.log("Akun sudah ada")
         }
+        req.login(user, () => { return res.redirect('/') })
       })
-    res.redirect('/')
   })
+  app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/login' }),
+    (req, res) => {
+      res.redirect('http://localhost:3000')
+    })
 
   //LOGOUT
   app.get('/api/logout',
