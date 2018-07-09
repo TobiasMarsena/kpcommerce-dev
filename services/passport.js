@@ -39,22 +39,18 @@ passport.use(new YoutubeV3Strategy({
   callbackURL: keys.GoogleParams.redirect_uri
 },
   (accessToken, refreshToken, profile, done) => {
-    User.findOne({ googleId: profile.id})
+    User.findOne({ id: profile.id})
       .then((user) => {
         if (!user) {
         new User({
-          googleId: profile.id,
-          name: profile.displayName,
-          image: profile._json.items[0].snippet.thumbnails.default.url
+          id: profile.id
         }).save()
         }
       })
     var user = {};
     user.id = profile.id,
     user.access_token = accessToken,
-    user.refresh_token = refreshToken,
-    user.name = profile.displayName,
-    user.image = profile._json.items[0].snippet.thumbnails.default.url
+    user.refresh_token = refreshToken
     return done(null, user)
   }))
 //Instagram Strategy
@@ -64,12 +60,18 @@ passport.use(new InstagramStrategy({
   callbackURL: keys.InstagramParams.redirect_uri
 },
   (accessToken, refreshToken, profile, done) => {
+    User.findOne({ id: profile.id})
+      .then((user) => {
+        if (!user) {
+        new User({
+          id: profile.id
+        }).save()
+        }
+      })
     var user = {};
     user.id = profile.id,
     user.access_token = accessToken,
-    user.refresh_token = refreshToken,
-    user.name = profile.displayName,
-    user.image = profile._json.data.profile_picture
+    user.refresh_token = refreshToken
     return done(null, user)
   }
 ));

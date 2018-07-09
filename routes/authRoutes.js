@@ -28,8 +28,6 @@ module.exports = (app) => {
           user.email= req.body.email
           user.password= user.hashPassword(req.body.password)
           user.save()
-        } else {
-          console.log("Akun sudah ada")
         }
         req.login(user, () => { return res.redirect('/') })
       })
