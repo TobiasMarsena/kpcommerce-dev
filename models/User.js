@@ -3,11 +3,24 @@ const bcrypt = require('bcrypt-nodejs')
 const { Schema } = mongoose
 
 const userSchema = new Schema({
-  googleId: String,
-  name: String,
+  id: String,
   email: String,
+  name: String,
   password: String,
-  image: String
+  avatar: String
+})
+
+const customerSchema = new Schema({
+  id: String,
+  email: String,
+  bank_account: String,
+  phone: String,
+  address: [{
+    street: String,
+    city: String,
+    state: String,
+    country: String
+  }]
 })
 
 userSchema.methods.hashPassword = password => {
@@ -19,3 +32,4 @@ userSchema.methods.comparePassword = (password, hash) => {
 }
 
 mongoose.model('users', userSchema)
+mongoose.model('customers', customerSchema)

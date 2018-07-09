@@ -9,7 +9,8 @@ import Login from './login/FormGrid'
 import Carousel from './Carousel'
 import Browse from './Browse'
 import Footer from './Footer'
-import Profile from './Profile'
+import Profile from './profile/Profile'
+import Edit from './profile/Edit'
 import Payment from './payment/Payment'
 import Success from './payment/Success'
 import Unfinished from './payment/Unfinished'
@@ -32,6 +33,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/browse" component={Browse} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/edit" component={Edit} />
             <Route exact path="/media" component={Media} />
             <Route exact path="/subscriptions" component={Subscription} />
             <Route exact path="/payment" component={Payment} />
