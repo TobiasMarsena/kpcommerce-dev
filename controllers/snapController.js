@@ -25,12 +25,9 @@ module.exports = () => {
   }
 
   return {
-    getPaymentToken: (req, res) => {
-      console.log(req.body)
-      axios.post(hostName + '/snap/v1/transactions', req.body, headers)
-        .then((response) => {
-          res.send(response.data)
-        })
+    getPaymentToken: async (req, res) => {
+      const response = await axios.post(hostName + '/snap/v1/transactions', req.body, headers)
+      res.send(response.data)
     }
   }
 

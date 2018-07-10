@@ -6,20 +6,16 @@ module.exports = () => {
 
     return {
         //Returns yourself profile data
-        getYourself: (req, res) => {
+        getYourself: async (req, res) => {
             const access_token = req.user.access_token
-            axios.get(`${url}/users/self/?access_token=${access_token}`, {})
-              .then((response) => {
-                res.send(response.data)
-              }).catch(error => console.log("Error getYourself: ", error))
+            const response = await axios.get(`${url}/users/self/?access_token=${access_token}`, {})
+            res.send(response.data)
         },
         //Returns yourself media
-        getYourselfMedia: (req, res) => {
+        getYourselfMedia: async (req, res) => {
             const access_token = req.user.access_token
-            axios.get(`${url}/users/self/media/recent/?access_token=${access_token}`, {})
-              .then((response) => {
-                res.send(response.data)
-            }).catch(error => console.log("Error getYourselfMedia: ", error))
+            const response = await axios.get(`${url}/users/self/media/recent/?access_token=${access_token}`, {})
+            res.send(response.data)
         }
     }
 }

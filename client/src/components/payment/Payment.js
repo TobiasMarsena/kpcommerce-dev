@@ -40,7 +40,7 @@ class Payment extends Component {
   //   console.log("script added")
   //   console.log(snap)
   // }
-  componentDidMount() {
+  async componentDidMount() {
     const items = this.state.item_details;
     var gross_amount = 0;
     items.map((item)  => {
@@ -53,20 +53,17 @@ class Payment extends Component {
         gross_amount: gross_amount
       }
     })
-  }
-
-  showSNAP() {
+    const response = await axios.get("/api/profile")
     this.setState({
       customer_details: {
-        name: this.props.auth.name
+        name: response.data.user.name
       }
-    }, () => {
-      axios.post("/api/payment", this.state, {})
-        .then((res) => {
-          console.log(res.data)
-          snap.pay(res.data.token)
-        })
     })
+  }
+
+  async showSNAP() {
+    const res = await axios.post("/api/payment", this.state, {})
+    snap.pay(res.data.token)
   }
   renderCheckoutButton() {
     switch(this.props.auth) {

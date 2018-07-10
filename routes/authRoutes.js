@@ -19,18 +19,16 @@ module.exports = (app) => {
     res.redirect('http://localhost:3000');
   });
 
-  app.post('/auth/register', (req, res) => {
-    User.findOne({ email: req.body.email })
-      .then((user) => {
-        if (!user) {
-          user = new User()
-          user.name= req.body.name
-          user.email= req.body.email
-          user.password= user.hashPassword(req.body.password)
-          user.save()
-        }
-        req.login(user, () => { return res.redirect('/') })
-      })
+  app.post('/auth/register', async (req, res) => {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+      user = new User()
+      user.name= req.body.name
+      user.email= req.body.email
+      user.password= user.hashPassword(req.body.password)
+      user.save()
+    }
+    req.login(user, () => { return res.redirect('/') })
   })
   app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/login' }),
     (req, res) => {

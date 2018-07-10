@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button } from 'mdbreact'
 
 import Greeting from './Greeting'
-import Edit from './Edit'
 
 class Profile extends Component {
   render() {
