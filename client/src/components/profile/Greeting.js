@@ -6,8 +6,10 @@ class Greeting extends Component {
     switch(this.props.auth){
       case null: return ''
       case false: return 'Hello, Guest'
-      default: if (this.props.auth.name) {
-        return 'Hello, ' + this.props.auth.name
+      default:
+// axios get profile
+      if (this.props.auth.user.name) {
+        return 'Hello, ' + this.props.auth.user.name
       }
       return 'Hello, Guest'
     }

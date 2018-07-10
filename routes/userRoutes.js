@@ -8,7 +8,7 @@ module.exports = app => {
   //ENSURE AUTH
   function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) return next();
-    res.redirect('http://localhost:3000/login');
+    res.redirect('/login');
   }
 
   // CONTROLLER
@@ -20,51 +20,65 @@ module.exports = app => {
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
   });
-  app.post('/api/profile/edit', ensureAuthenticated, (req, res) => {
+
+  app.get('/api/profile', ensureAuthenticated, async (req, res) => {
+    var send;
+    if (req.user) {
+      if (req.user.id) {
+        const user = await User.findOne({ id: req.user.id })
+        const customer = await Customer.findOne({ id: user.id })
+        send = {
+          user: user,
+          customer: customer
+        }
+      } else if (req.user.email) {
+        const user = await User.findOne({ email: req.user.email })
+        const customer = await Customer.findOne({ email: user.email })
+        send = {
+          user: user,
+          customer: customer
+        }
+      }
+    }
+    res.send(send)
+  })
+  app.post('/api/profile/edit', ensureAuthenticated, async (req, res) => {
     if (req.user.id) {
-      User.findOne({ id: req.user.id })
-        .then((user) => {
-          user.name = req.body.first_name + ' ' + req.body.last_name
-          user.save()
-          Customer.findOne({ id: user.id })
-            .then((customer) => {
-              if (!customer) {
-                customer = new Customer()
-              }
-              customer.id = user.id
-              customer.phone = req.body.phone
-              customer.address.push({
-                street: req.body.street,
-                city: req.body.city,
-                state: req.body.state,
-                country: req.body.country
-              })
-              customer.bank_account = req.body.bank_account
-              customer.save()
-            })
-        })
+      const user = await User.findOne({ id: req.user.id })
+      user.name = req.body.first_name + ' ' + req.body.last_name
+      user.save()
+      const customer = await Customer.findOne({ id: user.id })
+      if (!customer) {
+        customer = new Customer()
+      }
+      customer.id = user.id
+      customer.phone = req.body.phone
+      customer.address.push({
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country
+      })
+      customer.bank_account = req.body.bank_account
+      customer.save()
     } else if (req.user.email) {
-      User.findOne({ email: req.user.email })
-        .then((user) => {
-          user.name = req.body.first_name + ' ' + req.body.last_name
-          user.save()
-          Customer.findOne({ email: user.email })
-            .then((customer) => {
-              if (!customer) {
-                customer = new Customer()
-              }
-              customer.email = user.email
-              customer.phone = req.body.phone
-              customer.address.push({
-                street: req.body.street,
-                city: req.body.city,
-                state: req.body.state,
-                country: req.body.country
-              })
-              customer.bank_account = req.body.bank_account
-              customer.save()
-            })
-        })
+      const user = await User.findOne({ email: req.user.email })
+      user.name = req.body.first_name + ' ' + req.body.last_name
+      user.save()
+      const customer = await Customer.findOne({ email: user.email })
+      if (!customer) {
+        customer = new Customer()
+      }
+      customer.email = user.email
+      customer.phone = req.body.phone
+      customer.address.push({
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country
+      })
+      customer.bank_account = req.body.bank_account
+      customer.save()
     }
     res.redirect('/profile')
   })

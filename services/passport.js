@@ -24,12 +24,10 @@ passport.use(new LocalStrategy({
   usernameField: "email",
   passwordField: "password"
 },
-  (username, password, done) => {
-    User.findOne({ email: username})
-      .then((user) => {
-        if (!user) { return done(null, false) }
-        if (user.comparePassword(password, user.password)) { return done(null, user) }
-      })
+  async (username, password, done) => {
+    const user = await User.findOne({ email: username})
+    if (!user) { return done(null, false) }
+    if (user.comparePassword(password, user.password)) { return done(null, user) }
   }))
 
 //Youtube Strategy
@@ -38,15 +36,13 @@ passport.use(new YoutubeV3Strategy({
   clientSecret: keys.GoogleParams.client_secret,
   callbackURL: keys.GoogleParams.redirect_uri
 },
-  (accessToken, refreshToken, profile, done) => {
-    User.findOne({ id: profile.id})
-      .then((user) => {
-        if (!user) {
-        new User({
-          id: profile.id
-        }).save()
-        }
-      })
+  async (accessToken, refreshToken, profile, done) => {
+    const user = await User.findOne({ id: profile.id})
+    if (!user) {
+    new User({
+      id: profile.id
+    }).save()
+    }
     var user = {};
     user.id = profile.id,
     user.access_token = accessToken,
@@ -59,15 +55,13 @@ passport.use(new InstagramStrategy({
   clientSecret: keys.InstagramParams.client_secret,
   callbackURL: keys.InstagramParams.redirect_uri
 },
-  (accessToken, refreshToken, profile, done) => {
-    User.findOne({ id: profile.id})
-      .then((user) => {
-        if (!user) {
-        new User({
-          id: profile.id
-        }).save()
-        }
-      })
+  async (accessToken, refreshToken, profile, done) => {
+    const user = await User.findOne({ id: profile.id})
+    if (!user) {
+    new User({
+      id: profile.id
+    }).save()
+    }
     var user = {};
     user.id = profile.id,
     user.access_token = accessToken,
