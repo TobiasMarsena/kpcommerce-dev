@@ -37,13 +37,13 @@ passport.use(new YoutubeV3Strategy({
   callbackURL: keys.GoogleParams.redirect_uri
 },
   async (accessToken, refreshToken, profile, done) => {
-    const user = await User.findOne({ id: profile.id})
+    var user = await User.findOne({ id: profile.id})
     if (!user) {
     new User({
       id: profile.id
     }).save()
     }
-    var user = {};
+    user = {};
     user.id = profile.id,
     user.access_token = accessToken,
     user.refresh_token = refreshToken
@@ -56,13 +56,13 @@ passport.use(new InstagramStrategy({
   callbackURL: keys.InstagramParams.redirect_uri
 },
   async (accessToken, refreshToken, profile, done) => {
-    const user = await User.findOne({ id: profile.id})
+    var user = await User.findOne({ id: profile.id})
     if (!user) {
     new User({
       id: profile.id
     }).save()
     }
-    var user = {};
+    user = {};
     user.id = profile.id,
     user.access_token = accessToken,
     user.refresh_token = refreshToken

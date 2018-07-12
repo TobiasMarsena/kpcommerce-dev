@@ -21,7 +21,7 @@ module.exports = app => {
     res.send(req.user);
   });
 
-  app.get('/api/profile', ensureAuthenticated, async (req, res) => {
+  app.get('/api/profile', async (req, res) => {
     var send;
     if (req.user) {
       if (req.user.id) {
@@ -47,7 +47,7 @@ module.exports = app => {
       const user = await User.findOne({ id: req.user.id })
       user.name = req.body.first_name + ' ' + req.body.last_name
       user.save()
-      const customer = await Customer.findOne({ id: user.id })
+      var customer = await Customer.findOne({ id: user.id })
       if (!customer) {
         customer = new Customer()
       }
@@ -65,7 +65,7 @@ module.exports = app => {
       const user = await User.findOne({ email: req.user.email })
       user.name = req.body.first_name + ' ' + req.body.last_name
       user.save()
-      const customer = await Customer.findOne({ email: user.email })
+      var customer = await Customer.findOne({ email: user.email })
       if (!customer) {
         customer = new Customer()
       }

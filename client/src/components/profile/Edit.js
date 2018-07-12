@@ -11,7 +11,7 @@ class Edit extends Component{
               <p className="h5 text-center mb-4">Profile</p>
               <Row>
                 <Col md="6" className="col-md-3">
-                  <Input icon="user" name="first_name" label="First Name" group type="text" validate required/>
+                  <Input icon="user" name="first_name" label="First Name" group type="text" validate/>
                 </Col>
                 <Col md="6" className="col-md-3">
                   <Input name="last_name"  label="Last Name" group type="text" validate/>
