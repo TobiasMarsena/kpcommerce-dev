@@ -3,15 +3,10 @@ import { connect } from 'react-redux'
 
 class Greeting extends Component {
   insertGreeting(){
-    switch(this.props.auth){
+    switch(this.props.profile){
       case null: return ''
-      case false: return 'Hello, Guest'
-      default:
-// axios get profile
-      if (this.props.auth.user.name) {
-        return 'Hello, ' + this.props.auth.user.name
-      }
-      return 'Hello, Guest'
+      case false: return <strong>Hello, Guest</strong>
+      default: return <strong>Hello, {this.props.profile.user.name}</strong>
     }
   }
 
@@ -24,7 +19,8 @@ class Greeting extends Component {
   }
 }
 
-function mapStatetoProps({ auth }){
-  return { auth }
+function mapStateToProps({ profile }) {
+  return { profile }
 }
-export default connect(mapStatetoProps)(Greeting)
+
+export default connect(mapStateToProps)(Greeting)
