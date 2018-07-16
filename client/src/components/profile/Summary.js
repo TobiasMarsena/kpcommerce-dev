@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, CardTitle, Fa, Table } from 'mdbreact'
+import { Fa, Table } from 'mdbreact'
 import { connect } from 'react-redux'
 
 class Summary extends Component {
@@ -31,9 +31,7 @@ class Summary extends Component {
   }
 
   render() {
-    console.log(this.props.profile)
     const customer = this.props.profile.customer
-    const user = this.props.profile.user
     return (
       <div>
         <h3>

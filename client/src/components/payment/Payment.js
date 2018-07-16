@@ -4,6 +4,7 @@ import { Button } from 'mdbreact'
 import { SyncLoader } from 'react-spinners'
 import { connect } from 'react-redux'
 import TablePayment from './TablePayment'
+import _ from 'lodash'
 const snap = window.snap
 
 class Payment extends Component {
@@ -49,7 +50,7 @@ class Payment extends Component {
     })
     this.setState({
       transaction_details: {
-        order_id: "102",
+        order_id: _.uniqueId(),
         gross_amount: gross_amount
       }
     })
