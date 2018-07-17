@@ -11,5 +11,5 @@ Features:
 6. Midtrans SNAP Integration (Payment Method)
 7. MongoDB and Mongoose
 
-Copyright © Tobias Marsena 2018
 Last Update: 16 July 2018
+Copyright © Tobias Marsena 2018
