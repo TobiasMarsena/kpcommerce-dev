@@ -7,7 +7,9 @@ const userSchema = new Schema({
   email: String,
   name: String,
   password: String,
-  avatar: String
+  avatar: String,
+  resetPasswordToken: String,
+	resetPasswordExpires: Date
 })
 
 const customerSchema = new Schema({
