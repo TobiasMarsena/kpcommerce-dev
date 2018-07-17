@@ -1,8 +1,15 @@
 
 import React, { Component } from 'react';
 import { Container, Row, Col, Card, CardImage, CardBody, Badge } from 'mdbreact';
+import WOW from 'wowjs';
+
 
 class Main extends Component {
+  componentDidMount() {
+    new WOW.WOW({
+        live: false
+    }).init();
+  }
   render() {
     return(
       <Container>
@@ -11,7 +18,7 @@ class Main extends Component {
           <p className="grey-text text-center w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur veniam.</p>
           <Row>
             <Col lg="3" md="6" className="mb-lg-0 mb-4">
-              <Card className="align-items-center">
+              <Card className="align-items-center wow bounceInLeft">
                 <CardImage src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" top alt="sample photo" overlay="white-slight" />
                 <CardBody className="text-center">
                   <a href="" className="grey-text">
@@ -29,7 +36,7 @@ class Main extends Component {
               </Card>
             </Col>
             <Col lg="3" md="6" className="mb-lg-0 mb-4">
-              <Card className="align-items-center">
+              <Card className="align-items-center wow tada">
                 <CardImage src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13.jpg" top alt="sample photo" overlay="white-slight" />
                 <CardBody className="text-center">
                   <a href="" className="grey-text">
@@ -47,7 +54,7 @@ class Main extends Component {
               </Card>
             </Col>
             <Col lg="3" md="6" className="mb-lg-0 mb-4">
-              <Card className="align-items-center">
+              <Card className="align-items-center wow rotateInUpRight">
                 <CardImage src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14.jpg" top alt="sample photo" overlay="white-slight" />
                 <CardBody className="text-center">
                   <a href="" className="grey-text">
@@ -65,7 +72,7 @@ class Main extends Component {
               </Card>
             </Col>
             <Col lg="3" md="6" className="mb-lg-0 mb-4">
-              <Card className="align-items-center">
+              <Card className="align-items-center wow lightSpeedIn">
                 <CardImage src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15.jpg" top alt="sample photo" overlay="white-slight" />
                 <CardBody className="text-center">
                   <a href="" className="grey-text">

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Input, Button, Col, Fa, CardTitle } from 'mdbreact';
 
@@ -12,6 +11,7 @@ class FormLogin extends React.Component {
 				    <p className="h5 text-center mb-4">Sign in</p>
 				    <Input name="email" label="Type your email" icon="envelope" group type="email" validate error="wrong" success="right"/>
 				    <Input name="password" label="Type your password" icon="lock" group type="password" validate/>
+            <p className="h6 mb-1"><a href="/forgot">Forgot password?</a></p>
 				    <div className="text-center">
               <Button type="submit">Login</Button>
 				    </div>

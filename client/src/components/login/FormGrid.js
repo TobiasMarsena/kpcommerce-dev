@@ -7,15 +7,12 @@ import {Row } from 'mdbreact';
 class FormGrid extends React.Component {
     render(){
         return(
-        	
-             <Row>
-             	<FormLogin />
-             	<FormRegister />
-             </Row>
-			
+          <Row>
+            <FormLogin />
+            <FormRegister />
+          </Row>
         );
     }
 }
-      
+
 export default FormGrid;
-                      
