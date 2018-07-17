@@ -6,6 +6,8 @@ import * as actions from '../actions'
 import Header from './Header'
 import Main from './Main'
 import Login from './login/FormGrid'
+import FormForgot from './login/FormForgot'
+import FormReset from './login/FormReset'
 import Carousel from './Carousel'
 import Browse from './Browse'
 import Footer from './Footer'
@@ -31,6 +33,8 @@ class App extends Component {
             <Route exact path="/" component={Carousel} />
             <Route exact path="/" component={Main} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/forgot" component={FormForgot} />
+            <Route path="/reset/:token" component={FormReset} />
             <Route exact path="/browse" component={Browse} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/profile/edit" component={Edit} />
